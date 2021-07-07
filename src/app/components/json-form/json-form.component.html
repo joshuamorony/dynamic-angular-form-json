@@ -1,0 +1,50 @@
+<form [formGroup]="myForm" (ngSubmit)="onSubmit()">
+  <ion-item *ngFor="let control of jsonFormData?.controls">
+    <ion-label>{{ control.label }}</ion-label>
+    <ion-input
+      *ngIf="
+        [
+          'text',
+          'password',
+          'email',
+          'number',
+          'search',
+          'tel',
+          'url'
+        ].includes(control.type)
+      "
+      [type]="control.type"
+      [formControlName]="control.name"
+      [value]="control.value"
+    ></ion-input>
+    <ion-textarea
+      *ngIf="control.type === 'textarea'"
+      [formControlName]="control.name"
+      [value]="control.value"
+    ></ion-textarea>
+    <ion-checkbox
+      *ngIf="control.type === 'checkbox'"
+      [formControlName]="control.name"
+      [checked]="control.value"
+    ></ion-checkbox>
+    <ion-toggle
+      *ngIf="control.type === 'toggle'"
+      [formControlName]="control.name"
+      [checked]="control.value"
+    ></ion-toggle>
+    <ion-range
+      *ngIf="control.type === 'range'"
+      [min]="control.options.min"
+      [max]="control.options.max"
+      [formControlName]="control.name"
+    >
+      <ion-icon
+        size="small"
+        slot="start"
+        [name]="control.options.icon"
+      ></ion-icon>
+      <ion-icon slot="end" [name]="control.options.icon"></ion-icon>
+    </ion-range>
+  </ion-item>
+  <ion-button type="submit">Submit</ion-button>
+</form>
